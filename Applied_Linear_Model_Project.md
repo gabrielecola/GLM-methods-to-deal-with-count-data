@@ -18,7 +18,7 @@ The dataset is given by the Laboratory of Artificial Intelligence and Decision s
 
 The main attributes : \
 
-- $\textbf{instant}$: record index 
+- \\text{instant}: record index 
 - $\textbf{dteday}$ : date 
 - $\textbf{season}$ : 1 = spring, 2 = summer, 3 = fall, 4 = winter
 - $\textbf{yr}$ : Year (0: 2011, 1:2012) 
