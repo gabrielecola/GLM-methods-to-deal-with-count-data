@@ -35,7 +35,7 @@ The main attributes : \
 - $\textbf{registered}$: count of registered users 
 - $\textbf{cnt}$: count of total rental bikes including both casual and registered 
 
-
+<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
 
 
 ```r
