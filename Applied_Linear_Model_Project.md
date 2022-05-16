@@ -470,7 +470,7 @@ to reject the $H_{0}$ , so our model doesn't fit data well.
 
 
 There are two ways to check overdispersion: \
-1.The Pearson <img src="https://render.githubusercontent.com/render/math?math=chi^{2}"> dispersion statistic \
+1.The Pearson <img src="https://render.githubusercontent.com/render/math?math=\chi^{2}"> dispersion statistic \
 2. Plot the approximations of Mean vs Variance  \
 
 $The \ Pearson$ $\chi^2$ $dispersion\ statistic$
