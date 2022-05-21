@@ -35,7 +35,7 @@ The main attributes :
 - <img src="https://render.githubusercontent.com/render/math?math=registered">: count of registered users 
 - <img src="https://render.githubusercontent.com/render/math?math=cnt">: count of total rental bikes including both casual and registered 
 
-<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
+
 
 
 ```r
@@ -147,8 +147,8 @@ glimpse(new_data)
 
 $HeatMap$ \
 We use a heatmap to see clearly the correlation matrix: 
-1. $Temp$ \ and $atemp$ are high correllated , close to 1 so we can remove it one of them. 
-2. $Registered$/ $Casual$ and $Count$ are highly correlated which indicates that most of the bikes that are rented are registered , one of them we can eliminate.
+1. <img src="https://render.githubusercontent.com/render/math?math=Temo"> \ and <img src="https://render.githubusercontent.com/render/math?math=atemp"> are high correllated , close to 1 so we can remove it one of them. 
+2. <img src="https://render.githubusercontent.com/render/math?math=Registered"> / <img src="https://render.githubusercontent.com/render/math?math= Casual"> and <img src="https://render.githubusercontent.com/render/math?math=cnt"> are highly correlated which indicates that most of the bikes that are rented are registered , one of them we can eliminate.
 
 
 ```r
@@ -160,9 +160,9 @@ corrplot(cor_matrix, method="number",tl.cex=0.5,number.digits = 1)
 ![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 $Scatterplot$ 
-1. $Temperature$ are positively correlated with $Count$, if $Temperature$ rise also $Count$.
-2. $WindSpeed$ are negatively correlated with $Count$, if $Wind$ rise  $Count$ will diminish.
-3. $Temperature \ feeling$ follows the same pattern of $Temperature$ , because they are highly correlated.
+1. <img src="https://render.githubusercontent.com/render/math?math=Temperatures"> are positively correlated with $<img src="https://render.githubusercontent.com/render/math?math=Count">, if <img src="https://render.githubusercontent.com/render/math?math=Temperatures"> rise also <img src="https://render.githubusercontent.com/render/math?math=Count">.
+2. <img src="https://render.githubusercontent.com/render/math?math=Windspeed"> are negatively correlated with <img src="https://render.githubusercontent.com/render/math?math=Count">, if <img src="https://render.githubusercontent.com/render/math?math=Wind"> rise  <img src="https://render.githubusercontent.com/render/math?math=Count"> will diminish.
+3. <img src="https://render.githubusercontent.com/render/math?math=Temperature feeling"> follows the same pattern of $Temperature$ , because they are highly correlated.
 
 ```r
 temp_scatter<-ggplot(new_data, aes(x=temp, y=cnt)) +
@@ -319,10 +319,10 @@ ggplot(new_data, aes(x=cnt))+
 
 ### 4. Feature Engineering
 
-1. As wee see in Correlation matrix, we can delete $casual$ or $registered$.
-2. We remove $atemp$  because is highly correllated with $temp$
-3. We remove $dteday$ because is not useful
-4. We remove $workingday$ because gives the same information of $weekdays$
+1. As wee see in Correlation matrix, we can delete <img src="https://render.githubusercontent.com/render/math?math=casuals"> or <img src="https://render.githubusercontent.com/render/math?math=registered">.
+2. We remove <img src="https://render.githubusercontent.com/render/math?math=atemp">  because is highly correllated with <img src="https://render.githubusercontent.com/render/math?math=temp">
+3. We remove <img src="https://render.githubusercontent.com/render/math?math=dteday"> because is not useful
+4. We remove <img src="https://render.githubusercontent.com/render/math?math=workingday"> because gives the same information of <img src="https://render.githubusercontent.com/render/math?math=weekdays">
 
 ```r
 new_data5<- new_data %>% dplyr:: select(-casual,-atemp,-dteday,-workingday)
