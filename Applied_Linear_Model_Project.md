@@ -16,7 +16,7 @@ output:
 This dataset contains the daily count of rental bikes between years 2011 and 2012 in Capital bikeshare system, which operates on some of the major cities of the State of Washington D.C, Virginia and Maryland.
 The dataset is given by the Laboratory of Artificial Intelligence and Decision support of the University of Porto.
 
-The main attributes : \
+The main attributes : 
 
 - $\textbf{instant}$: record index 
 - $\textbf{dteday}$ : date 
@@ -146,8 +146,8 @@ glimpse(new_data)
 #### 3. EDA
 
 $HeatMap$ \
-We use a heatmap to see clearly the correlation matrix: \
-1. $temp$ and $atemp$ are high correllated , close to 1 so we can remove it one of them. \
+We use a heatmap to see clearly the correlation matrix: 
+1. $temp$ and $atemp$ are high correllated , close to 1 so we can remove it one of them. 
 2. $Registered$/ $Casual$ and $Count$ are highly correlated which indicates that most of the bikes that are rented are registered , one of them we can eliminate.
 
 
@@ -159,9 +159,9 @@ corrplot(cor_matrix, method="number",tl.cex=0.5,number.digits = 1)
 
 ![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
-$Scatterplot$ \
-1. $Temperature$ are positively correlated with $Count$, if $Temperature$ rise also $Count$.\
-2. $WindSpeed$ are negatively correlated with $Count$, if $Wind$ rise  $Count$ will diminish.\
+$Scatterplot$ 
+1. $Temperature$ are positively correlated with $Count$, if $Temperature$ rise also $Count$.
+2. $WindSpeed$ are negatively correlated with $Count$, if $Wind$ rise  $Count$ will diminish.
 3. $Temperature \ feeling$ follows the same pattern of $Temperature$ , because they are highly correlated.
 
 ```r
@@ -545,13 +545,13 @@ train.bike %>% filter(cnt==605)
 
 There are two main approaches that we can take to deal with over-dispersed count data in GLMs: \
 
-1. Fit a quasi-Poisson GLM \
+1. Fit a quasi-Poisson GLM 
 2. Fit a negative binomial GLM
 
 
 $Quasi Poisson$
 
-We have to deal with $overdispersion$,so we adopted the Quasi Poisson model that will result in the same coefficients as The Poisson model  but with different Standard errors and p-values thanks to his dispersion  parameter $\phi$, that tells how much the variance linearly changes in relation to the mean.
+We have to deal with $overdispersion$,so we adopted the Quasi Poisson model that will result in the same coefficients as The Poisson model  but with different Standard errors and p-value thanks to his dispersion  parameter $\phi$, that tells how much the variance linearly changes in relation to the mean.
 Furthermore, we can’t obtain an AIC value for quasi-Poisson models, because these models use quasi-likelihood rather than true likelihood.
 
 
