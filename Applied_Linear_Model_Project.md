@@ -25,15 +25,15 @@ The main attributes :
 - <img src="https://render.githubusercontent.com/render/math?math=mnth"> : Month ( 1 to 12) 
 - <img src="https://render.githubusercontent.com/render/math?math=holiday"> : whether the day is considered a holiday or not
 - <img src="https://render.githubusercontent.com/render/math?math=workingday">: if day is neither weekend nor holiday is 1, otherwise is 0
-- <img src="https://render.githubusercontent.com/render/math?math=weekday">: day of the week 
-- <img src="https://render.githubusercontent.com/render/math?math=weathersit">: Weather ( 1:Clear,2: Cloudy,3:Rain)
-- <img src="https://render.githubusercontent.com/render/math?math=temp">: temperature in Celsius (normalized)
-- <img src="https://render.githubusercontent.com/render/math?math=atemp">:"feels like" temperature in Celsius(normalized)
-- <img src="https://render.githubusercontent.com/render/math?math=hum">: relative humidity
-- <img src="https://render.githubusercontent.com/render/math?math=windspeed">: normalized wind speed.
-- <img src="https://render.githubusercontent.com/render/math?math=casual">: count of casual users
-- <img src="https://render.githubusercontent.com/render/math?math=registered">: count of registered users 
-- <img src="https://render.githubusercontent.com/render/math?math=cnt">: count of total rental bikes including both casual and registered 
+- <img src="https://render.githubusercontent.com/render/math?math=weekday"> : day of the week 
+- <img src="https://render.githubusercontent.com/render/math?math=weathersit"> : Weather ( 1:Clear,2: Cloudy,3:Rain)
+- <img src="https://render.githubusercontent.com/render/math?math=temp"> : temperature in Celsius (normalized)
+- <img src="https://render.githubusercontent.com/render/math?math=atemp"> :"feels like" temperature in Celsius(normalized)
+- <img src="https://render.githubusercontent.com/render/math?math=hum"> : relative humidity
+- <img src="https://render.githubusercontent.com/render/math?math=windspeed"> : normalized wind speed.
+- <img src="https://render.githubusercontent.com/render/math?math=casual"> : count of casual users
+- <img src="https://render.githubusercontent.com/render/math?math=registered"> : count of registered users 
+- <img src="https://render.githubusercontent.com/render/math?math=cnt"> : count of total rental bikes including both casual and registered 
 
 
 
