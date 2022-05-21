@@ -147,7 +147,7 @@ glimpse(new_data)
 
 $HeatMap$ \
 We use a heatmap to see clearly the correlation matrix: 
-1. $temp$ and $atemp$ are high correllated , close to 1 so we can remove it one of them. 
+1. $Temp$ \ and $atemp$ are high correllated , close to 1 so we can remove it one of them. 
 2. $Registered$/ $Casual$ and $Count$ are highly correlated which indicates that most of the bikes that are rented are registered , one of them we can eliminate.
 
 
