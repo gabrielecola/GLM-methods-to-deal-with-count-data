@@ -61,9 +61,9 @@ https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset
   <img src="https://user-images.githubusercontent.com/103529789/177041253-e2a02a1b-c0d5-414a-bc99-f3e03c75a1b3.png" width="400" /> 
 </p>
     
-  
-  <img src="https://user-images.githubusercontent.com/103529789/177041256-74d2ad9c-5a9e-4037-8ad0-751a58dc9c91.png" width="400"/>
-  <img src="https://user-images.githubusercontent.com/103529789/177041257-4d39716f-1a4e-4d05-a093-e55d386d776f.png" width="400" /> 
-
+   <p float="left">
+  <img src="https://user-images.githubusercontent.com/103529789/177041256-74d2ad9c-5a9e-4037-8ad0-751a58dc9c91.png" width="350"/>
+  <img src="https://user-images.githubusercontent.com/103529789/177041257-4d39716f-1a4e-4d05-a093-e55d386d776f.png" width="350" /> 
+</p>
  
         
