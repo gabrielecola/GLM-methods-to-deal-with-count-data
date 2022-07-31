@@ -1,5 +1,5 @@
 
-## GLM methods to deal with count data
+## The Bike Sharing system analyzed by GLM
 
 ## Table of Contents
 
