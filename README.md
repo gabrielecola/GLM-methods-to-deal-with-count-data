@@ -52,7 +52,7 @@ https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset
         - Poisson Regression
         - Quasi Poisson model
         - Negative Binomial model
-    - Metrics - Since R2 is based on the sums of squares of our model, and so cannot be calculated for GLMs, we adopted the Deviance Explained, and RMSE (Root Mean Squared Error)
+    - Metrics: RMSE (Root Mean Squared Error)
 
     ### 4. Results
     
