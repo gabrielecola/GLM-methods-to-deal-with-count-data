@@ -9,8 +9,9 @@
   * [Attribute Information](#attribute-information)
     + [Inputs](#inputs)
     + [Output](#output)
-- [3. Modelling Evaluation](#3-modelling-evaluation)
-- [4. Results](#4-results)
+- [3. EDA](#3-eda)
+- [4. Modelling Evaluation](#3-modelling-evaluation)
+- [5. Results](#4-results)
 
 
 ### Bike sharing count prediction using GLM
@@ -45,18 +46,9 @@ https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset
     - registered
     ##### Output
     - cnt
-
-    ### 3. Modelling Evaluation
-
-    - Algorithms used
-        - Poisson Regression
-        - Quasi Poisson model
-        - Negative Binomial model
-    - Metrics: RMSE (Root Mean Squared Error)
-
-    ### 4. Results
     
-    <p float="left">
+    ### 3. EDA
+        <p float="left">
   <img src="https://user-images.githubusercontent.com/103529789/177041218-70db5e89-d15e-46be-861d-0565fc51c03a.png" width="350"/>
   <img src="https://user-images.githubusercontent.com/103529789/177041253-e2a02a1b-c0d5-414a-bc99-f3e03c75a1b3.png" width="350" /> 
   <img src="https://user-images.githubusercontent.com/103529789/177041256-74d2ad9c-5a9e-4037-8ad0-751a58dc9c91.png" width="350"/>
@@ -64,5 +56,16 @@ https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset
 </p>
     
 
- 
+    ### 4. Modelling Evaluation
+
+    - Algorithms used
+        - Poisson Regression
+        - Quasi Poisson model
+        - Negative Binomial model
+    - Metrics: RMSE (Root Mean Squared Error)
+
+    ### 5. Results
+    
+      <img src="https://user-images.githubusercontent.com/103529789/182046949-22d38172-ce40-4076-bac6-f2238b2d78ab.png" width="350"/>
+   
         
