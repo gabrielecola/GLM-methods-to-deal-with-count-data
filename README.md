@@ -59,8 +59,8 @@ https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset
 
     - Algorithms used
         - Poisson Regression
-        - Quasi Poisson model
-        - Negative Binomial model
+        - Quasi Poisson Regression
+        - Negative Binomial Regression
     - Metrics: RMSE (Root Mean Squared Error)
 
     ### 5. Results
