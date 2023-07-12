@@ -1,13 +1,12 @@
 ---
-title: 'The Bike Sharing system analyzed by GLM'
+title: "GLM applied to Bike Sharings"
 author: "Gabriele Cola"
-date: "25/3/2022"
-output:
+date: "2023-07-12"
+output:  
   html_document:
     keep_md: true
+
 ---
-
-
 
 
 
@@ -37,14 +36,17 @@ The main attributes : \
 
 
 
+```r
+day_data=read_csv('/Users/gabrielecola/GLM_BikeSharing/Data/bike_rental.csv')
+```
+
 
 ```r
-day_data=read_csv('/Users/gabrielecola/Downloads/Bike-Sharing-Dataset/bike_rental.csv')
 head(day_data)
 ```
 
 ```
-## # A tibble: 6 x 16
+## # A tibble: 6 × 16
 ##   instant dteday     season    yr  mnth holiday weekday workingday weathersit
 ##     <dbl> <date>      <dbl> <dbl> <dbl>   <dbl>   <dbl>      <dbl>      <dbl>
 ## 1       1 2011-01-01      1     0     1       0       6          0          2
@@ -53,9 +55,12 @@ head(day_data)
 ## 4       4 2011-01-04      1     0     1       0       2          1          1
 ## 5       5 2011-01-05      1     0     1       0       3          1          1
 ## 6       6 2011-01-06      1     0     1       0       4          1          1
-## # … with 7 more variables: temp <dbl>, atemp <dbl>, hum <dbl>, windspeed <dbl>,
+## # ℹ 7 more variables: temp <dbl>, atemp <dbl>, hum <dbl>, windspeed <dbl>,
 ## #   casual <dbl>, registered <dbl>, cnt <dbl>
 ```
+
+
+
 
 ```r
 summary(day_data)
@@ -92,9 +97,12 @@ summary(day_data)
 ##  Max.   :0.50746   Max.   :3410.0   Max.   :6946   Max.   :8714
 ```
 
+
+
 #### 2. PRE-PROCESSING 
 
 ###### 2.1 CHECKING THE MISSING  VALUE
+
 
 ```r
 sum(is.na(day_data))
@@ -104,9 +112,11 @@ sum(is.na(day_data))
 ## [1] 0
 ```
 
+
 ###### 2.2 ENCODING VARIABLE
 
 We encode some variables as factors because initially they are encoded as dbl for practical reason so we reestablish the correct type of them.
+
 
 ```r
 cols <- c("season", "yr", "weathersit", "workingday",'holiday','mnth','weekday')
@@ -140,9 +150,6 @@ glimpse(new_data)
 ```
 
 
-
-
-
 #### 3. EDA
 
 $HeatMap$ \
@@ -157,12 +164,13 @@ cor_matrix<-cor(new_data2)
 corrplot(cor_matrix, method="number",tl.cex=0.5,number.digits = 1)
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 $Scatterplot$ \
 1. $Temperature$ are positively correlated with $Count$, if $Temperature$ rise also $Count$.\
 2. $WindSpeed$ are negatively correlated with $Count$, if $Wind$ rise  $Count$ will diminish.\
 3. $Temperature \ feeling$ follows the same pattern of $Temperature$ , because they are highly correlated.
+
 
 ```r
 temp_scatter<-ggplot(new_data, aes(x=temp, y=cnt)) +
@@ -193,8 +201,7 @@ atemp_scatter<-ggplot(new_data, aes(x=atemp, y=cnt)) +
 temp_scatter+humidity_scatter+windspeed_scatter+atemp_scatter
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
-
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 Here we create a Dataframe that reports the total count for each $weathersit$.
 
@@ -211,7 +218,6 @@ glimpse(data_weather)
 ## $ weathersit <fct> 1, 2, 3
 ## $ count      <dbl> 2194133, 984804, 37869
 ```
-
 
 In this two graph we want to analyze the variable $weathersit$, firstly with geom_bar so we look to the frequency of each $weathersit$,and then with geom_col to see the overall count for each $weathersit$.
 
@@ -231,8 +237,7 @@ m<-ggplot(data = new_data) +
 m+j
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
-
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
 Now our focus is on variable $Season$,so we decide to choose a boxplot for each $Season$.
 We have observed that the highest median is registered in Summer and followed by Spring.
@@ -247,8 +252,7 @@ ggplot(aes(x=season,y = cnt),data=new_data)+geom_boxplot(aes(fill=season)) + the
   labs(title = "Boxplot of Season ", caption = "1: Winter,2: Spring,3:Summer,4:Fall")
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
-
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 
 We want to see the Trends across the $Year$ 2011 and 2012, in order to spot the peaks and downs of each $month$ per $Year$.
@@ -266,9 +270,7 @@ ggplot(data = new_data, aes(mnth, cnt)) +
     labs(title = "Trend ", caption = "0: 2011,1: 2012")
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
-
-
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 
 In this graph we analyze in depth the variable $Holiday$, firstly with a bar chart in order to
@@ -283,9 +285,10 @@ ggplot(data = new_data) +
   xlab('holiday')
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 Furthermore, with the second graph we spot that during the weekend there are the most peaks of renting bikes, while when there is holiday we have few data so we cannot draw a conclusion.
+
 
 ```r
 ggplot(data = new_data, aes(weekday, cnt)) +
@@ -297,10 +300,7 @@ ggplot(data = new_data, aes(weekday, cnt)) +
     labs(title = "Trend ", caption = "0: Sunday,1: Monday,2: Tuesday,3:Wednesday,4:Thursday,5:Friday,6:Saturday")
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
-
-
-
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
 To see how our $Y$ is distributed in order to choose which models we have to applied, we notice that the
 variable $cnt$ is distributed like a Normal, and we know that even if our Y is count but if it is large enough it can be approximately ~ N.
@@ -313,8 +313,7 @@ ggplot(new_data, aes(x=cnt))+
             color="blue", linetype="dashed", size=1)
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
-
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
 
 ### 4. Feature Engineering
@@ -323,6 +322,7 @@ ggplot(new_data, aes(x=cnt))+
 2. We remove $atemp$  because is highly correllated with $temp$
 3. We remove $dteday$ because is not useful
 4. We remove $workingday$ because gives the same information of $weekdays$
+
 
 ```r
 new_data5<- new_data %>% dplyr:: select(-casual,-atemp,-dteday,-workingday)
@@ -346,10 +346,7 @@ glimpse(new_data5)
 ## $ cnt        <dbl> 985, 801, 1349, 1562, 1600, 1606, 1510, 959, 822, 1321, 126…
 ```
 
-
-
 ### 5. Model
-
 
 
 ```r
@@ -358,10 +355,6 @@ split.bike<-initial_split(new_data5,0.7)
 train.bike<-training(split.bike)
 test.bike<-testing(split.bike)
 ```
-
-
-
-
 
 #### 5.1 POISSON MODEL 
 
@@ -383,51 +376,52 @@ summary(pois_mod)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -35.756   -4.500    0.574    5.025   18.609  
+## -42.572   -4.633    0.787    4.464   24.581  
 ## 
 ## Coefficients:
 ##               Estimate Std. Error  z value Pr(>|z|)    
-## (Intercept)  7.268e+00  6.542e-03 1111.053  < 2e-16 ***
-## instant     -1.185e-03  7.718e-05  -15.351  < 2e-16 ***
-## season2      1.021e-01  4.541e-03   22.495  < 2e-16 ***
-## season3      1.462e-01  5.331e-03   27.418  < 2e-16 ***
-## season4      1.643e-01  5.491e-03   29.911  < 2e-16 ***
-## yr1          4.517e-01  2.847e-02   15.867  < 2e-16 ***
-## mnth2        1.421e-01  5.046e-03   28.156  < 2e-16 ***
-## mnth3        2.275e-01  6.823e-03   33.346  < 2e-16 ***
-## mnth4        2.091e-01  9.653e-03   21.657  < 2e-16 ***
-## mnth5        2.378e-01  1.173e-02   20.269  < 2e-16 ***
-## mnth6        1.608e-01  1.383e-02   11.628  < 2e-16 ***
-## mnth7        1.296e-01  1.589e-02    8.153 3.54e-16 ***
-## mnth8        1.615e-01  1.800e-02    8.971  < 2e-16 ***
-## mnth9        2.539e-01  1.993e-02   12.738  < 2e-16 ***
-## mnth10       3.252e-01  2.171e-02   14.976  < 2e-16 ***
-## mnth11       4.258e-01  2.381e-02   17.882  < 2e-16 ***
-## mnth12       3.835e-01  2.586e-02   14.831  < 2e-16 ***
-## holiday1     8.692e-02  4.328e-03   20.084  < 2e-16 ***
-## weekday1    -2.121e-01  2.809e-03  -75.508  < 2e-16 ***
-## weekday2    -2.482e-01  2.919e-03  -85.034  < 2e-16 ***
-## weekday3    -2.632e-01  2.969e-03  -88.621  < 2e-16 ***
-## weekday4    -2.582e-01  2.968e-03  -86.975  < 2e-16 ***
-## weekday5    -1.931e-01  2.832e-03  -68.183  < 2e-16 ***
-## weekday6     1.441e-02  2.568e-03    5.610 2.03e-08 ***
-## weathersit2 -1.495e-02  1.951e-03   -7.665 1.79e-14 ***
-## weathersit3 -2.253e-01  7.014e-03  -32.124  < 2e-16 ***
-## temp         6.824e-01  1.070e-02   63.785  < 2e-16 ***
-## hum         -1.401e-01  7.771e-03  -18.026  < 2e-16 ***
-## windspeed   -2.014e-01  1.029e-02  -19.567  < 2e-16 ***
-## registered   2.414e-04  1.203e-06  200.701  < 2e-16 ***
+## (Intercept)  7.327e+00  6.481e-03 1130.437   <2e-16 ***
+## instant     -1.694e-03  7.863e-05  -21.536   <2e-16 ***
+## season2      9.772e-02  4.538e-03   21.533   <2e-16 ***
+## season3      1.106e-01  5.183e-03   21.334   <2e-16 ***
+## season4      1.050e-01  5.301e-03   19.811   <2e-16 ***
+## yr1          5.880e-01  2.892e-02   20.336   <2e-16 ***
+## mnth2        1.049e-01  4.918e-03   21.329   <2e-16 ***
+## mnth3        2.016e-01  6.866e-03   29.359   <2e-16 ***
+## mnth4        2.251e-01  9.624e-03   23.393   <2e-16 ***
+## mnth5        2.312e-01  1.187e-02   19.475   <2e-16 ***
+## mnth6        2.183e-01  1.382e-02   15.803   <2e-16 ***
+## mnth7        2.389e-01  1.590e-02   15.021   <2e-16 ***
+## mnth8        2.900e-01  1.800e-02   16.114   <2e-16 ***
+## mnth9        3.214e-01  1.987e-02   16.174   <2e-16 ***
+## mnth10       4.558e-01  2.189e-02   20.816   <2e-16 ***
+## mnth11       5.390e-01  2.409e-02   22.377   <2e-16 ***
+## mnth12       5.437e-01  2.621e-02   20.744   <2e-16 ***
+## holiday1     1.422e-01  5.020e-03   28.322   <2e-16 ***
+## weekday1    -2.201e-01  2.922e-03  -75.314   <2e-16 ***
+## weekday2    -2.395e-01  2.950e-03  -81.199   <2e-16 ***
+## weekday3    -2.822e-01  3.053e-03  -92.429   <2e-16 ***
+## weekday4    -2.608e-01  3.013e-03  -86.537   <2e-16 ***
+## weekday5    -2.141e-01  2.949e-03  -72.587   <2e-16 ***
+## weekday6     2.556e-02  2.542e-03   10.057   <2e-16 ***
+## weathersit2 -1.841e-03  1.845e-03   -0.998    0.318    
+## weathersit3 -2.973e-01  6.755e-03  -44.019   <2e-16 ***
+## temp         5.058e-01  1.029e-02   49.152   <2e-16 ***
+## hum         -6.135e-02  7.089e-03   -8.653   <2e-16 ***
+## windspeed   -2.249e-01  1.007e-02  -22.327   <2e-16 ***
+## registered   2.618e-04  1.235e-06  211.956   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for poisson family taken to be 1)
 ## 
-##     Null deviance: 485309  on 511  degrees of freedom
-## Residual deviance:  33528  on 482  degrees of freedom
-## AIC: 38767
+##     Null deviance: 447388  on 510  degrees of freedom
+## Residual deviance:  31295  on 481  degrees of freedom
+## AIC: 36532
 ## 
 ## Number of Fisher Scoring iterations: 4
 ```
+
 
 ```r
 exp(coef(pois_mod))
@@ -435,28 +429,20 @@ exp(coef(pois_mod))
 
 ```
 ##  (Intercept)      instant      season2      season3      season4          yr1 
-## 1434.0448798    0.9988158    1.1075415    1.1573884    1.1785145    1.5709180 
+## 1520.4351444    0.9983079    1.1026593    1.1169112    1.1107208    1.8004509 
 ##        mnth2        mnth3        mnth4        mnth5        mnth6        mnth7 
-##    1.1526553    1.2554966    1.2325094    1.2685182    1.1744288    1.1383597 
+##    1.1105862    1.2233183    1.2524869    1.2600995    1.2440015    1.2698229 
 ##        mnth8        mnth9       mnth10       mnth11       mnth12     holiday1 
-##    1.1752337    1.2890704    1.3842901    1.5308075    1.4674424    1.0908093 
+##    1.3364209    1.3790329    1.5773674    1.7143452    1.7224236    1.1527956 
 ##     weekday1     weekday2     weekday3     weekday4     weekday5     weekday6 
-##    0.8088781    0.7801657    0.7686235    0.7724618    0.8244056    1.0145094 
+##    0.8024540    0.7869945    0.7541458    0.7704620    0.8072818    1.0258930 
 ##  weathersit2  weathersit3         temp          hum    windspeed   registered 
-##    0.9851585    0.7982684    1.9786034    0.8692918    0.8176175    1.0002414
+##    0.9981607    0.7428000    1.6582581    0.9404974    0.7985690    1.0002618
 ```
-
-```r
-# Every time I increase temp by 1 lambda will increase by 1.978
-# Every time I increase hum by 1 lambda will decrease by 0.8692
-```
-
-
-
 
 #### 5.1.1 DIAGNOSTIC OF THE MODEL
 
-Before we try to spot if there is overdispersion or not , we firstly check the goodness of fit and we have
+Before we try to spot if there is **overdispersion** or not , we firstly check the goodness of fit and we have
 to reject the $H_{0}$ , so our model doesn't fit data well.
 
 
@@ -468,7 +454,6 @@ to reject the $H_{0}$ , so our model doesn't fit data well.
 ```
 ## [1] 0
 ```
-
 
 There are two ways to check overdispersion: \
 1.The Pearson $\chi^2$ dispersion statistic \
@@ -485,13 +470,13 @@ P__disp(pois_mod)
 
 ```
 ## pearson.chi2   dispersion 
-##  31571.60912     65.50126
+##  29154.84267     60.61298
 ```
-
 
 $Plot\ Mean\ vs \ Variance$ \
 We want to check if the assumption of $\mu$ = $\sigma^2$, so if they are equal they should stand in that following line.
 We notice that there is a systematic variation that line then it means that there is a hidden relationship between variance and expectation.
+
 
 ```r
 #Check if mean is equal to variance
@@ -505,43 +490,46 @@ plot(log(E_hat),log(V_hat))
 abline(0,1)
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
-
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
 $Outlier$ \
 Furthermore, we try to detect some $outlier$ to see if it can also cause some troubles to the model and
-we spot the observation 48 of training set but it don't seem to be a real outlier because it is  a low count but in winter so we would expect it, so it  not probably the cause.
+we spot the observation 193 of training set but it don't seem to be a real outlier because it is  a low count but in winter so we would expect it, so it  not probably the cause.
+
 
 ```r
 # we make an half normal plot of studentized residuals 
 halfnorm(rstudent(pois_mod))
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
+
 
 ```r
 # we want  see the value of count of that observation
-train.bike$cnt[48]
+train.bike$cnt[193]
 ```
 
 ```
-## [1] 605
+## [1] 22
 ```
+
 
 ```r
 #inspect the see the feature of that particular observation
-train.bike %>% filter(cnt==605)
+train.bike %>% filter(cnt==22)
 ```
 
 ```
-## # A tibble: 1 x 12
+## # A tibble: 1 × 12
 ##   instant season yr    mnth  holiday weekday weathersit  temp   hum windspeed
 ##     <dbl> <fct>  <fct> <fct> <fct>   <fct>   <fct>      <dbl> <dbl>     <dbl>
-## 1      65 1      0     3     0       0       2          0.377 0.948     0.343
-## # … with 2 more variables: registered <dbl>, cnt <dbl>
+## 1     668 4      1     10    0       1       3           0.44  0.88     0.358
+## # ℹ 2 more variables: registered <dbl>, cnt <dbl>
 ```
 
 #### 5.1.2 Predictions
+
 
 ```r
 predictions_pois<- predict(pois_mod,newdata=test.bike,type='response')
@@ -551,9 +539,8 @@ RMSE_pois
 ```
 
 ```
-## [1] 497.9591
+## [1] 499.7525
 ```
-
 
 
 There are two main approaches that we can take to deal with over-dispersed count data in GLMs: \
@@ -579,47 +566,47 @@ summary(quasipois_mod)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -35.756   -4.500    0.574    5.025   18.609  
+## -42.572   -4.633    0.787    4.464   24.581  
 ## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  7.268e+00  5.294e-02 137.281  < 2e-16 ***
-## instant     -1.185e-03  6.247e-04  -1.897 0.058450 .  
-## season2      1.021e-01  3.675e-02   2.779 0.005658 ** 
-## season3      1.462e-01  4.315e-02   3.388 0.000762 ***
-## season4      1.643e-01  4.444e-02   3.696 0.000244 ***
-## yr1          4.517e-01  2.304e-01   1.961 0.050509 .  
-## mnth2        1.421e-01  4.084e-02   3.479 0.000549 ***
-## mnth3        2.275e-01  5.522e-02   4.120 4.46e-05 ***
-## mnth4        2.091e-01  7.812e-02   2.676 0.007706 ** 
-## mnth5        2.378e-01  9.497e-02   2.504 0.012594 *  
-## mnth6        1.608e-01  1.119e-01   1.437 0.151439    
-## mnth7        1.296e-01  1.286e-01   1.007 0.314245    
-## mnth8        1.615e-01  1.457e-01   1.109 0.268194    
-## mnth9        2.539e-01  1.613e-01   1.574 0.116160    
-## mnth10       3.252e-01  1.757e-01   1.850 0.064856 .  
-## mnth11       4.258e-01  1.927e-01   2.210 0.027606 *  
-## mnth12       3.835e-01  2.093e-01   1.833 0.067490 .  
-## holiday1     8.692e-02  3.503e-02   2.482 0.013419 *  
-## weekday1    -2.121e-01  2.273e-02  -9.330  < 2e-16 ***
-## weekday2    -2.482e-01  2.363e-02 -10.507  < 2e-16 ***
-## weekday3    -2.632e-01  2.403e-02 -10.950  < 2e-16 ***
-## weekday4    -2.582e-01  2.402e-02 -10.747  < 2e-16 ***
-## weekday5    -1.931e-01  2.292e-02  -8.425 4.19e-16 ***
-## weekday6     1.441e-02  2.078e-02   0.693 0.488561    
-## weathersit2 -1.495e-02  1.579e-02  -0.947 0.344086    
-## weathersit3 -2.253e-01  5.676e-02  -3.969 8.31e-05 ***
-## temp         6.824e-01  8.658e-02   7.881 2.18e-14 ***
-## hum         -1.401e-01  6.289e-02  -2.227 0.026394 *  
-## windspeed   -2.014e-01  8.329e-02  -2.418 0.015992 *  
-## registered   2.414e-04  9.733e-06  24.798  < 2e-16 ***
+## (Intercept)  7.327e+00  5.046e-02 145.199  < 2e-16 ***
+## instant     -1.694e-03  6.122e-04  -2.766 0.005889 ** 
+## season2      9.772e-02  3.533e-02   2.766 0.005896 ** 
+## season3      1.106e-01  4.035e-02   2.740 0.006367 ** 
+## season4      1.050e-01  4.127e-02   2.545 0.011252 *  
+## yr1          5.880e-01  2.251e-01   2.612 0.009281 ** 
+## mnth2        1.049e-01  3.829e-02   2.740 0.006381 ** 
+## mnth3        2.016e-01  5.345e-02   3.771 0.000183 ***
+## mnth4        2.251e-01  7.493e-02   3.005 0.002798 ** 
+## mnth5        2.312e-01  9.242e-02   2.501 0.012699 *  
+## mnth6        2.183e-01  1.076e-01   2.030 0.042922 *  
+## mnth7        2.389e-01  1.238e-01   1.929 0.054266 .  
+## mnth8        2.900e-01  1.401e-01   2.070 0.039009 *  
+## mnth9        3.214e-01  1.547e-01   2.077 0.038293 *  
+## mnth10       4.558e-01  1.705e-01   2.674 0.007757 ** 
+## mnth11       5.390e-01  1.875e-01   2.874 0.004230 ** 
+## mnth12       5.437e-01  2.041e-01   2.664 0.007969 ** 
+## holiday1     1.422e-01  3.909e-02   3.638 0.000305 ***
+## weekday1    -2.201e-01  2.275e-02  -9.674  < 2e-16 ***
+## weekday2    -2.395e-01  2.297e-02 -10.430  < 2e-16 ***
+## weekday3    -2.822e-01  2.377e-02 -11.872  < 2e-16 ***
+## weekday4    -2.608e-01  2.346e-02 -11.115  < 2e-16 ***
+## weekday5    -2.141e-01  2.296e-02  -9.323  < 2e-16 ***
+## weekday6     2.556e-02  1.979e-02   1.292 0.197040    
+## weathersit2 -1.841e-03  1.436e-02  -0.128 0.898044    
+## weathersit3 -2.973e-01  5.259e-02  -5.654 2.69e-08 ***
+## temp         5.058e-01  8.011e-02   6.313 6.21e-10 ***
+## hum         -6.135e-02  5.519e-02  -1.111 0.266918    
+## windspeed   -2.249e-01  7.843e-02  -2.868 0.004315 ** 
+## registered   2.618e-04  9.616e-06  27.225  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## (Dispersion parameter for quasipoisson family taken to be 65.50127)
+## (Dispersion parameter for quasipoisson family taken to be 60.61307)
 ## 
-##     Null deviance: 485309  on 511  degrees of freedom
-## Residual deviance:  33528  on 482  degrees of freedom
+##     Null deviance: 447388  on 510  degrees of freedom
+## Residual deviance:  31295  on 481  degrees of freedom
 ## AIC: NA
 ## 
 ## Number of Fisher Scoring iterations: 4
@@ -631,8 +618,8 @@ Negative Binomial model.
 Furthermore, we have to guess that there is non linear relationship between the variance and the mean,
 therefore the quasi Poisson model would not be appropriate because it assumes that the variance increases linearly as a function of the mean.
 
-
 #### 5.2.1 Predictions
+
 
 ```r
 predictions_quasipois<- predict(quasipois_mod,newdata=test.bike,type='response')
@@ -642,9 +629,8 @@ RMSE_quasipois
 ```
 
 ```
-## [1] 497.9591
+## [1] 499.7525
 ```
-
 
 
 #### 5.3 Negative  Binomial
@@ -652,7 +638,6 @@ RMSE_quasipois
 The Negative Binomial is Poisson regression model with an extra parameter $\theta$, which may account for overdispersion. \
 $Var=\mu+\frac{\mu^2}{\theta}$ \
 In comparison to The Quasi-Poisson regression model, the negative binomial models assumes that the variance can increase by the square of the mean.
-
 
 
 ```r
@@ -663,67 +648,64 @@ summary(negative_bin)
 ```
 ## 
 ## Call:
-## glm.nb(formula = cnt ~ ., data = train.bike, init.theta = 39.88797352, 
+## glm.nb(formula = cnt ~ ., data = train.bike, init.theta = 35.71510935, 
 ##     link = log)
 ## 
 ## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -5.3964  -0.5444   0.0618   0.5740   2.7254  
+##      Min        1Q    Median        3Q       Max  
+## -12.1652   -0.4451    0.0553    0.4514    2.9309  
 ## 
 ## Coefficients:
 ##               Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)  7.184e+00  6.269e-02 114.587  < 2e-16 ***
-## instant     -1.435e-03  8.106e-04  -1.770 0.076744 .  
-## season2      1.034e-01  4.601e-02   2.248 0.024602 *  
-## season3      1.736e-01  5.446e-02   3.187 0.001436 ** 
-## season4      1.831e-01  4.964e-02   3.689 0.000225 ***
-## yr1          5.408e-01  2.995e-01   1.806 0.070966 .  
-## mnth2        1.403e-01  4.291e-02   3.271 0.001072 ** 
-## mnth3        2.091e-01  6.383e-02   3.276 0.001052 ** 
-## mnth4        1.945e-01  9.569e-02   2.032 0.042122 *  
-## mnth5        2.295e-01  1.190e-01   1.929 0.053765 .  
-## mnth6        1.213e-01  1.423e-01   0.852 0.393977    
-## mnth7        8.051e-02  1.665e-01   0.484 0.628650    
-## mnth8        1.156e-01  1.893e-01   0.611 0.541355    
-## mnth9        2.622e-01  2.104e-01   1.246 0.212601    
-## mnth10       3.656e-01  2.318e-01   1.577 0.114720    
-## mnth11       4.740e-01  2.548e-01   1.860 0.062868 .  
-## mnth12       4.351e-01  2.760e-01   1.576 0.114981    
-## holiday1     5.684e-02  4.315e-02   1.317 0.187817    
-## weekday1    -1.898e-01  2.860e-02  -6.637 3.20e-11 ***
-## weekday2    -2.304e-01  2.930e-02  -7.865 3.70e-15 ***
-## weekday3    -2.383e-01  2.979e-02  -8.001 1.24e-15 ***
-## weekday4    -2.367e-01  3.020e-02  -7.837 4.61e-15 ***
-## weekday5    -1.601e-01  2.898e-02  -5.524 3.32e-08 ***
-## weekday6    -3.079e-03  2.681e-02  -0.115 0.908543    
-## weathersit2 -8.835e-03  2.033e-02  -0.435 0.663879    
-## weathersit3 -2.152e-01  5.573e-02  -3.861 0.000113 ***
-## temp         8.383e-01  1.103e-01   7.599 2.99e-14 ***
-## hum         -2.257e-01  7.972e-02  -2.831 0.004640 ** 
-## windspeed   -2.978e-01  1.050e-01  -2.836 0.004565 ** 
-## registered   2.661e-04  1.197e-05  22.234  < 2e-16 ***
+## (Intercept)  7.195e+00  6.471e-02 111.189  < 2e-16 ***
+## instant     -2.449e-03  8.797e-04  -2.784  0.00537 ** 
+## season2      9.978e-02  4.803e-02   2.077  0.03777 *  
+## season3      1.110e-01  5.777e-02   1.921  0.05473 .  
+## season4      5.825e-02  5.116e-02   1.139  0.25483    
+## yr1          8.248e-01  3.239e-01   2.547  0.01088 *  
+## mnth2        1.361e-01  4.478e-02   3.039  0.00238 ** 
+## mnth3        2.235e-01  6.923e-02   3.228  0.00125 ** 
+## mnth4        2.560e-01  1.011e-01   2.531  0.01136 *  
+## mnth5        2.629e-01  1.266e-01   2.076  0.03785 *  
+## mnth6        2.440e-01  1.501e-01   1.626  0.10395    
+## mnth7        3.069e-01  1.760e-01   1.743  0.08126 .  
+## mnth8        3.675e-01  2.000e-01   1.838  0.06605 .  
+## mnth9        4.562e-01  2.209e-01   2.065  0.03894 *  
+## mnth10       6.539e-01  2.493e-01   2.623  0.00872 ** 
+## mnth11       7.948e-01  2.744e-01   2.897  0.00377 ** 
+## mnth12       8.088e-01  2.978e-01   2.716  0.00660 ** 
+## holiday1     1.370e-01  5.114e-02   2.679  0.00739 ** 
+## weekday1    -2.310e-01  3.109e-02  -7.429 1.09e-13 ***
+## weekday2    -2.499e-01  3.198e-02  -7.814 5.53e-15 ***
+## weekday3    -2.932e-01  3.268e-02  -8.973  < 2e-16 ***
+## weekday4    -2.611e-01  3.232e-02  -8.080 6.46e-16 ***
+## weekday5    -2.201e-01  3.244e-02  -6.784 1.17e-11 ***
+## weekday6     9.196e-03  2.832e-02   0.325  0.74544    
+## weathersit2  4.643e-03  2.071e-02   0.224  0.82263    
+## weathersit3 -3.362e-01  5.526e-02  -6.084 1.18e-09 ***
+## temp         6.160e-01  1.126e-01   5.470 4.49e-08 ***
+## hum         -6.077e-02  7.572e-02  -0.803  0.42224    
+## windspeed   -2.904e-01  1.094e-01  -2.655  0.00794 ** 
+## registered   3.052e-04  1.296e-05  23.542  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## (Dispersion parameter for Negative Binomial(39.888) family taken to be 1)
+## (Dispersion parameter for Negative Binomial(35.7151) family taken to be 1)
 ## 
-##     Null deviance: 5269.84  on 511  degrees of freedom
-## Residual deviance:  519.15  on 482  degrees of freedom
-## AIC: 8119
+##     Null deviance: 4478.33  on 510  degrees of freedom
+## Residual deviance:  540.28  on 481  degrees of freedom
+## AIC: 8197.4
 ## 
 ## Number of Fisher Scoring iterations: 1
 ## 
 ## 
-##               Theta:  39.89 
-##           Std. Err.:  2.54 
+##               Theta:  35.72 
+##           Std. Err.:  2.35 
 ## 
-##  2 x log-likelihood:  -8056.953
+##  2 x log-likelihood:  -8135.372
 ```
 
-
 We notice that the distance between Residual Deviance and degrees of freedom has been reduce so much.
-
-
 
 #### 5.3.1 MODEL SELECTION
 We want to choose the model with lower AIC and possibly less feature in order to have a simpler method
@@ -737,6 +719,59 @@ compute anova and we notice that the models have no differences.
 final_model<-step(negative_bin)
 ```
 
+```
+## Start:  AIC=8195.37
+## cnt ~ instant + season + yr + mnth + holiday + weekday + weathersit + 
+##     temp + hum + windspeed + registered
+## 
+##              Df Deviance    AIC
+## - hum         1   540.88 8194.0
+## - season      3   545.32 8194.4
+## <none>            540.28 8195.4
+## - yr          1   546.76 8199.9
+## - windspeed   1   547.27 8200.4
+## - holiday     1   547.52 8200.6
+## - instant     1   548.00 8201.1
+## - mnth       11   572.78 8205.9
+## - temp        1   569.98 8223.1
+## - weathersit  2   585.11 8236.2
+## - weekday     6   697.83 8340.9
+## - registered  1  1026.38 8679.5
+## 
+## Step:  AIC=8193.98
+## cnt ~ instant + season + yr + mnth + holiday + weekday + weathersit + 
+##     temp + windspeed + registered
+## 
+##              Df Deviance    AIC
+## - season      3   545.13 8192.9
+## <none>            540.21 8194.0
+## - windspeed   1   546.59 8198.4
+## - yr          1   546.88 8198.6
+## - holiday     1   547.72 8199.5
+## - instant     1   548.13 8199.9
+## - mnth       11   572.78 8204.5
+## - temp        1   569.82 8221.6
+## - weathersit  2   589.27 8239.0
+## - weekday     6   698.40 8340.2
+## - registered  1  1032.96 8684.7
+## 
+## Step:  AIC=8192.87
+## cnt ~ instant + yr + mnth + holiday + weekday + weathersit + 
+##     temp + windspeed + registered
+## 
+##              Df Deviance    AIC
+## <none>            539.84 8192.9
+## - yr          1   545.80 8196.8
+## - windspeed   1   546.43 8197.5
+## - instant     1   547.19 8198.2
+## - holiday     1   547.97 8199.0
+## - temp        1   568.86 8219.9
+## - mnth       11   591.99 8223.0
+## - weathersit  2   585.86 8234.9
+## - weekday     6   713.90 8354.9
+## - registered  1  1155.34 8806.4
+```
+
 
 
 ```r
@@ -745,26 +780,27 @@ final_model
 
 ```
 ## 
-## Call:  glm.nb(formula = cnt ~ instant + season + yr + mnth + weekday + 
-##     weathersit + temp + hum + windspeed + registered, data = train.bike, 
-##     init.theta = 39.7485615, link = log)
+## Call:  glm.nb(formula = cnt ~ instant + yr + mnth + holiday + weekday + 
+##     weathersit + temp + windspeed + registered, data = train.bike, 
+##     init.theta = 35.29940702, link = log)
 ## 
 ## Coefficients:
-## (Intercept)      instant      season2      season3      season4          yr1  
-##   7.1882672   -0.0014890    0.1055122    0.1760005    0.1857996    0.5707561  
-##       mnth2        mnth3        mnth4        mnth5        mnth6        mnth7  
-##   0.1418003    0.2114111    0.1999511    0.2376462    0.1272657    0.0863576  
-##       mnth8        mnth9       mnth10       mnth11       mnth12     weekday1  
-##   0.1235627    0.2792348    0.3862739    0.4957345    0.4568133   -0.1765777  
-##    weekday2     weekday3     weekday4     weekday5     weekday6  weathersit2  
-##  -0.2237705   -0.2311693   -0.2286784   -0.1529260   -0.0011872   -0.0116079  
-## weathersit3         temp          hum    windspeed   registered  
-##  -0.2242120    0.8648798   -0.2336641   -0.3086467    0.0002605  
+## (Intercept)      instant          yr1        mnth2        mnth3        mnth4  
+##   7.1576166   -0.0023895    0.7913751    0.1365415    0.2612954    0.3489815  
+##       mnth5        mnth6        mnth7        mnth8        mnth9       mnth10  
+##   0.3490352    0.3377241    0.4086726    0.4634496    0.5333185    0.6847182  
+##      mnth11       mnth12     holiday1     weekday1     weekday2     weekday3  
+##   0.8273978    0.8195012    0.1450089   -0.2360599   -0.2568417   -0.3005843  
+##    weekday4     weekday5     weekday6  weathersit2  weathersit3         temp  
+##  -0.2654256   -0.2261294    0.0084363   -0.0002677   -0.3361779    0.5823901  
+##   windspeed   registered  
+##  -0.2685470    0.0003123  
 ## 
-## Degrees of Freedom: 511 Total (i.e. Null);  483 Residual
-## Null Deviance:	    5252 
-## Residual Deviance: 519.1 	AIC: 8119
+## Degrees of Freedom: 510 Total (i.e. Null);  485 Residual
+## Null Deviance:	    4427 
+## Residual Deviance: 539.8 	AIC: 8195
 ```
+
 
 ```r
 anova(final_model,negative_bin)
@@ -775,15 +811,12 @@ anova(final_model,negative_bin)
 ## 
 ## Response: cnt
 ##                                                                                                 Model
-## 1           instant + season + yr + mnth + weekday + weathersit + temp + hum + windspeed + registered
+## 1                instant + yr + mnth + holiday + weekday + weathersit + temp + windspeed + registered
 ## 2 instant + season + yr + mnth + holiday + weekday + weathersit + temp + hum + windspeed + registered
 ##      theta Resid. df    2 x log-lik.   Test    df LR stat.   Pr(Chi)
-## 1 39.74856       483       -8058.688                                
-## 2 39.88797       482       -8056.953 1 vs 2     1 1.735436 0.1877182
+## 1 35.29941       485       -8140.874                                
+## 2 35.71511       481       -8135.372 1 vs 2     4 5.502323 0.2395254
 ```
-
-
-
 
 $The\ Exploratory \ Power$
 
@@ -799,8 +832,9 @@ nb_dev.explained
 ```
 
 ```
-## [1] 0.9011535
+## [1] 0.8780605
 ```
+
 
 #### 5.3.2 Predictions
 
@@ -812,10 +846,9 @@ RMSE_nb
 ```
 
 ```
-## [1] 653.5893
+## [1] 630.6454
 ```
 
-### 6. Results
 
 ```r
 rmse<-round(c(RMSE_pois,RMSE_quasipois,RMSE_nb),2)
@@ -824,7 +857,6 @@ rmse_data<- cbind(rmse,model)
 rmse_data2<- as.data.frame(rmse_data)
 rmse_data2<- rmse_data2 %>% mutate(rmse=as.numeric(rmse))
 ```
-
 
 RMSE has the same unit as the dependent variable. It means that there is no absolute good or bad threshold, however you can define it based on your DV. Our response variable has range from 22-8714, so this $RMSE_{s}$ indicate a good predictive ability of our model.
 Furthermore, we can notice despite the $overdispersion$ that is present in $Poisson \ Regression$ has a more predictive power ability
@@ -835,20 +867,9 @@ Finally, as we can expected the RMSE of $Poisson \ Regression$ and $Quasi\ Poiss
 ```r
 ggplot() + geom_col(data =rmse_data2, aes(x=reorder(model,-rmse),y=rmse,fill=model)) +
   xlab('Model') +
-   theme(axis.text.x=element_text(size=8.0))+
+   theme(axis.text.x=element_text(size=6.5))+
   labs(title = "RMSE for each Model")
 ```
 
-![](Applied_Linear_Model_Project_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
-
-```r
-ggsave("rmse_plot3.png")
-```
-
-```
-## Saving 7 x 5 in image
-```
-
-
-
+![](GLM_BikeSharing_files/figure-html/unnamed-chunk-35-1.png)<!-- -->
 
