@@ -15,7 +15,7 @@ output:
 This dataset contains the daily count of rental bikes between years 2011 and 2012 in Capital bikeshare system, which operates on some of the major cities of the State of Washington D.C, Virginia and Maryland.
 The dataset is given by the Laboratory of Artificial Intelligence and Decision support of the University of Porto.
 
-The main attributes : \
+The main attributes : 
 
 - $\textbf{instant}$ record index 
 - $\textbf{dteday}$ : date 
