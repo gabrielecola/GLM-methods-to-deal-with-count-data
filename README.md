@@ -1,7 +1,7 @@
 
 ## The Bike Sharing system analyzed by GLM
 
-For the report click [here](https://github.com/gabrielecola/GLM_BikeSharing/blob/main/GLM_BikeSharing.md)
+For the report click :point_right: [here](https://github.com/gabrielecola/GLM_BikeSharing/blob/main/GLM_BikeSharing.md)
 
 ## Table of Contents
 
