@@ -12,8 +12,8 @@ For the report click :point_right: [here](https://github.com/gabrielecola/GLM_Bi
     + [Inputs](#inputs)
     + [Output](#output)
 - [3. EDA](#3-eda)
-- [4. Modelling Evaluation](#3-modelling-evaluation)
-- [5. Results](#4-results)
+- [4. Modelling Evaluation](#4-modelling-evaluation)
+- [5. Results](#5-results)
 
 
 ### Bike sharing count prediction using GLM
