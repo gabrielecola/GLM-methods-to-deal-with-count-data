@@ -1,6 +1,8 @@
 
 ## The Bike Sharing system analyzed by GLM
 
+For the report click [here](https://github.com/gabrielecola/GLM_BikeSharing/blob/main/GLM_BikeSharing.md)
+
 ## Table of Contents
 
  - [Bike sharing count prediction using GLM](#bike-sharing-count-prediction-using-glm)
