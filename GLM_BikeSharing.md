@@ -17,22 +17,22 @@ The dataset is given by the Laboratory of Artificial Intelligence and Decision s
 
 The main attributes : 
 
-- $\textbf{instant}$ record index 
-- $\textbf{dteday}$ : date 
-- $\textbf{season}$ : 1 = spring, 2 = summer, 3 = fall, 4 = winter
-- $\textbf{yr}$ : Year (0: 2011, 1:2012) 
-- $\textbf{mnth}$ : Month ( 1 to 12) 
-- $\textbf{holiday}$ : whether the day is considered a holiday or not
-- $\textbf{workingday}$: if day is neither weekend nor holiday is 1, otherwise is 0
-- $\textbf{weekday}$: day of the week 
-- $\textbf{weathersit}$: Weather ( 1:Clear,2: Cloudy,3:Rain)
-- $\textbf{temp}$: temperature in Celsius (normalized)
-- $\textbf{atemp}$:"feels like" temperature in Celsius(normalized)
-- $\textbf{hum}$: relative humidity
-- $\textbf{windspeed}$: normalized wind speed.
-- $\textbf{casual}$: count of casual users
-- $\textbf{registered}$: count of registered users 
-- $\textbf{cnt}$: count of total rental bikes including both casual and registered 
+- **instant** record index 
+- **dteday** : date 
+- **season** : 1 = spring, 2 = summer, 3 = fall, 4 = winter
+- **yr** : Year (0: 2011, 1:2012) 
+- **mnth** : Month ( 1 to 12) 
+- **holiday** : whether the day is considered a holiday or not
+- **workingday**: if day is neither weekend nor holiday is 1, otherwise is 0
+- **weekday**: day of the week 
+- **weathersit**: Weather ( 1:Clear,2: Cloudy,3:Rain)
+- **temp**: temperature in Celsius (normalized)
+- **atemp**:"feels like" temperature in Celsius(normalized)
+- **hum**: relative humidity
+- **windspeed**: normalized wind speed.
+- **casual**: count of casual users
+- **registered**: count of registered users 
+- **cnt**: count of total rental bikes including both casual and registered 
 
 
 
@@ -154,8 +154,8 @@ glimpse(new_data)
 
 $HeatMap$ \
 We use a heatmap to see clearly the correlation matrix: \
-1. $temp$ and $atemp$ are high correllated , close to 1 so we can remove it one of them. \
-2. $Registered$/ $Casual$ and $Count$ are highly correlated which indicates that most of the bikes that are rented are registered , one of them we can eliminate.
+1. **temp** and **atemp** are high correllated , close to 1 so we can remove it one of them. \
+2. **Registered**/ **Casual** and **Count** are highly correlated which indicates that most of the bikes that are rented are registered , one of them we can eliminate.
 
 
 ```r
@@ -166,10 +166,10 @@ corrplot(cor_matrix, method="number",tl.cex=0.5,number.digits = 1)
 
 ![](GLM_BikeSharing_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
-$Scatterplot$ \
-1. $Temperature$ are positively correlated with $Count$, if $Temperature$ rise also $Count$.\
-2. $WindSpeed$ are negatively correlated with $Count$, if $Wind$ rise  $Count$ will diminish.\
-3. $Temperature \ feeling$ follows the same pattern of $Temperature$ , because they are highly correlated.
+$Scatterplot$ 
+1. **Temperature** are positively correlated with **Count**, if **Temperature** rise also **Count**.
+2. **WindSpeed** are negatively correlated with **Count**, if **Wind** rise  **Count** will diminish.
+3. **Temperature feeling** follows the same pattern of **Temperature** , because they are highly correlated.
 
 
 ```r
@@ -203,7 +203,7 @@ temp_scatter+humidity_scatter+windspeed_scatter+atemp_scatter
 
 ![](GLM_BikeSharing_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
-Here we create a Dataframe that reports the total count for each $weathersit$.
+Here we create a Dataframe that reports the total count for each **weathersit**.
 
 
 ```r
@@ -219,7 +219,7 @@ glimpse(data_weather)
 ## $ count      <dbl> 2194133, 984804, 37869
 ```
 
-In this two graph we want to analyze the variable $weathersit$, firstly with geom_bar so we look to the frequency of each $weathersit$,and then with geom_col to see the overall count for each $weathersit$.
+In this two graph we want to analyze the variable **weathersit**, firstly with geom_bar so we look to the frequency of each **weathersit**,and then with geom_col to see the overall count for each **weathersit**.
 
 
 ```r
@@ -239,9 +239,9 @@ m+j
 
 ![](GLM_BikeSharing_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
-Now our focus is on variable $Season$,so we decide to choose a boxplot for each $Season$.
+Now our focus is on variable **Season**,so we decide to choose a boxplot for each **Season**.
 We have observed that the highest median is registered in Summer and followed by Spring.
-Furthermore, we spot that there is an outlier in $Winter$ that may be caused by a very hot day where people used bikes, and also another one in Fall, where there is a day with 0 count.
+Furthermore, we spot that there is an outlier in **Winter** that may be caused by a very hot day where people used bikes, and also another one in Fall, where there is a day with 0 count.
 
 
 ```r
@@ -255,7 +255,7 @@ ggplot(aes(x=season,y = cnt),data=new_data)+geom_boxplot(aes(fill=season)) + the
 ![](GLM_BikeSharing_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 
-We want to see the Trends across the $Year$ 2011 and 2012, in order to spot the peaks and downs of each $month$ per $Year$.
+We want to see the Trends across the **Year** 2011 and 2012, in order to spot the peaks and downs of each **month** per **Year**.
 In 2011 we notice that with the beginning of spring and summer the $count$ of the bike has increased while with the incoming of autumn/winter the trend has decreased, same thing in 2012.
 Furthermore, we notice the in 2012 the trend has increased so much rather than 2011.
 
@@ -302,8 +302,8 @@ ggplot(data = new_data, aes(weekday, cnt)) +
 
 ![](GLM_BikeSharing_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
-To see how our $Y$ is distributed in order to choose which models we have to applied, we notice that the
-variable $cnt$ is distributed like a Normal, and we know that even if our Y is count but if it is large enough it can be approximately ~ N.
+To see how our **Y** is distributed in order to choose which models we have to applied, we notice that the
+variable **cnt** is distributed like a Normal, and we know that even if our Y is count but if it is large enough it can be approximately ~ N.
 
 
 ```r
@@ -318,10 +318,10 @@ ggplot(new_data, aes(x=cnt))+
 
 ### 4. Feature Engineering
 
-1. As wee see in Correlation matrix, we can delete $casual$ or $registered$.
-2. We remove $atemp$  because is highly correllated with $temp$
-3. We remove $dteday$ because is not useful
-4. We remove $workingday$ because gives the same information of $weekdays$
+1. As wee see in Correlation matrix, we can delete **casual** or **registered**.
+2. We remove **atemp**  because is highly correllated with **temp**
+3. We remove **dteday** because is not useful
+4. We remove **workingday** because gives the same information of **weekdays**
 
 
 ```r
@@ -358,7 +358,7 @@ test.bike<-testing(split.bike)
 
 #### 5.1 POISSON MODEL 
 
-We adopt for a Poisson model because $Y$ is count, but when we look at the summary we spot that there
+We adopt for a Poisson model because **Y** is count, but when we look at the summary we spot that there
 is big difference between residual deviance and degrees of freedom so probably it is caused by overdispersion.
 However, count data  are often overdispersed.This violates the assumption of a Poisson GLM, so our model
 has understimated the standard errors, which has resulted in too low p-values.
@@ -457,7 +457,7 @@ to reject the $H_{0}$ , so our model doesn't fit data well.
 
 There are two ways to check overdispersion: \
 1.The Pearson $\chi^2$ dispersion statistic \
-2. Plot the approximations of Mean vs Variance  \
+2. Plot the approximations of Mean vs Variance  
 
 $The \ Pearson$ $\chi^2$ $dispersion\ statistic$
 
@@ -493,7 +493,7 @@ abline(0,1)
 ![](GLM_BikeSharing_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
 $Outlier$ \
-Furthermore, we try to detect some $outlier$ to see if it can also cause some troubles to the model and
+Furthermore, we try to detect some **outlier** to see if it can also cause some troubles to the model and
 we spot the observation 193 of training set but it don't seem to be a real outlier because it is  a low count but in winter so we would expect it, so it  not probably the cause.
 
 
@@ -543,14 +543,14 @@ RMSE_pois
 ```
 
 
-There are two main approaches that we can take to deal with over-dispersed count data in GLMs: \
+There are two main approaches that we can take to deal with over-dispersed count data in GLMs: 
 
-1. Fit a quasi-Poisson GLM \
+1. Fit a quasi-Poisson GLM 
 2. Fit a negative binomial GLM
 
 #### 5.2 Quasi Poisson
 
-We have to deal with $overdispersion$,so we adopted the Quasi Poisson model that will result in the same coefficients as The Poisson model  but with different Standard errors and p-values thanks to his dispersion  parameter $\phi$, that tells how much the variance linearly changes in relation to the mean.
+We have to deal with **overdispersion**,so we adopted the Quasi Poisson model that will result in the same coefficients as The Poisson model  but with different Standard errors and p-values thanks to his dispersion  parameter $\phi$, that tells how much the variance linearly changes in relation to the mean.
 Furthermore, we can’t obtain an AIC value for quasi-Poisson models, because these models use quasi-likelihood rather than true likelihood.
 
 
@@ -710,7 +710,7 @@ We notice that the distance between Residual Deviance and degrees of freedom has
 #### 5.3.1 MODEL SELECTION
 We want to choose the model with lower AIC and possibly less feature in order to have a simpler method
 so we compute the function step.
-After computed it, we notice that we can remove variable $holiday$. \
+After computed it, we notice that we can remove variable **holiday**. \
 Furthermore, we want to spot if there any differences between the model with holiday and without it so we
 compute anova and we notice that the models have no differences.
 
@@ -858,10 +858,10 @@ rmse_data2<- as.data.frame(rmse_data)
 rmse_data2<- rmse_data2 %>% mutate(rmse=as.numeric(rmse))
 ```
 
-RMSE has the same unit as the dependent variable. It means that there is no absolute good or bad threshold, however you can define it based on your DV. Our response variable has range from 22-8714, so this $RMSE_{s}$ indicate a good predictive ability of our model.
-Furthermore, we can notice despite the $overdispersion$ that is present in $Poisson \ Regression$ has a more predictive power ability
-rather than $Negative\ Binomial$, probably because $overdispersion$ affects only p-values and not the values of coefficient.
-Finally, as we can expected the RMSE of $Poisson \ Regression$ and $Quasi\ Poisson \ Regression$ are the same because as we explained before , $Quasi\ Poisson$ only fixed the standard errors but the values of coefficient are the same.
+RMSE has the same unit as the dependent variable. It means that there is no absolute good or bad threshold, however you can define it based on your DV. Our response variable has range from 22-8714, so this **RMSE** indicate a good predictive ability of our model.
+Furthermore, we can notice despite the **overdispersion** that is present in **Poisson Regression** has a more predictive power ability
+rather than **Negative Binomial**, probably because **overdispersion** affects only p-values and not the values of coefficient.
+Finally, as we can expected the RMSE of **Poisson Regression** and **Quasi Poisson Regression** are the same because as we explained before , **Quasi Poisson** only fixed the standard errors but the values of coefficient are the same.
 
 
 ```r
