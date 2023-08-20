@@ -26,8 +26,8 @@ Predicting the count of rented bikes given some qualitative and quantitative att
 ### 2. Data Description
 Data is obtained from [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset)
 
-- Number of instances - 731
-- Number of attributes - 16
+- **Number of instances**: 731
+- **Number of attributes**: 16
 
     #### Attribute Information
     ##### Inputs
@@ -58,11 +58,11 @@ Data is obtained from [UCI Machine Learning Repository](https://archive.ics.uci.
 
     ### 4. Modelling Evaluation
 
-    - Algorithms used
+    - **Algorithms used**
         - Poisson Regression
         - Quasi Poisson Regression
         - Negative Binomial Regression
-    - Metrics: RMSE (Root Mean Squared Error)
+    - **Metrics**: RMSE (Root Mean Squared Error)
 
     ### 5. Results
     
