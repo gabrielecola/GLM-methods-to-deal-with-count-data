@@ -24,8 +24,7 @@ Thus, using GLM to predict the count of rented bikes could be useful in generati
 Predicting the count of rented bikes given some qualitative and quantitative attribute.
 
 ### 2. Data Description
-Data is obtained from UCI Machine Learning Repository.
-https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset 
+Data is obtained from [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset)
 
 - Number of instances - 731
 - Number of attributes - 16
